@@ -6,19 +6,19 @@ theme: jekyll-theme-chirpy
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
 # otherwise, the layout language will use the default value of 'en'.
-lang: en
+lang: ko # lang
 
 # Change to your timezone › https://kevinnovak.github.io/Time-Zone-Picker
-timezone:
+timezone: Asia/Seoul # timezone
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Eddy.log # the main title
+title: Eddy.log # title
 
-tagline: 화이팅!!!!!!! # it will display as the subtitle
+tagline: 안녕하세요🤚 공부한 내용을 기록합니다. # sub title
 
-description: >- # used by seo meta and the atom feed
+description: >- # to-do : SEO keyword
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
 
 # Fill in the protocol & hostname for your site.
@@ -28,23 +28,24 @@ url: "https://smart-eddy.github.io"
 github:
   username: Smart-Eddy # change to your GitHub username
 
-twitter:
-  username: twitter_username # change to your Twitter username
+#twitter:
+#  username: twitter_username # change to your Twitter username
 
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Smart-Eddy
-  email: example@domain.com # change to your email address
+  email: leelck4@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your Twitter homepage
+    #- https://twitter.com/username # change to your Twitter homepage
     - https://github.com/Smart-Eddy # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
 
 # Site Verification Settings
+# To-do : 검색 엔진에 등록 후 인증코드 입력
 webmaster_verifications:
   google: # fill in your Google verification code
   bing: # fill in your Bing verification code
@@ -57,6 +58,7 @@ webmaster_verifications:
 # The end of `jekyll-seo-tag` settings
 
 # Web Analytics Settings
+# To-do : Google Analytics 등록 후 설정
 analytics:
   google:
     id: # fill in your Google Analytics ID
@@ -98,6 +100,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
+# to-do : blog 메인 이미지 경로
 avatar:
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
@@ -107,6 +110,7 @@ social_preview_image: # string, local or CORS resources
 # boolean type, the global switch for TOC in posts.
 toc: true
 
+# to-do : 댓글 기능
 comments:
   # Global switch for the post-comment system. Keeping it empty means disabled.
   provider: # [disqus | utterances | giscus]
@@ -147,7 +151,7 @@ pwa:
     deny_paths:
       # - "/example"  # URLs match `<SITE_URL>/example/*` will not be cached by the PWA
 
-paginate: 10
+paginate: 10 # paging
 
 # The base URL of your site
 baseurl: ""
