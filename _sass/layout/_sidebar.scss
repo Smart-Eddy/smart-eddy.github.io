@@ -102,19 +102,22 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
     @extend %sidebar-link-hover;
 
     font-family: inherit;
-    font-weight: 900;
+    font-weight: 1000;
     font-size: 1.75rem;
     line-height: 1.2;
     letter-spacing: 0.25px;
     margin-top: 1.25rem;
     margin-bottom: 0.5rem;
     width: fit-content;
-    color: var(--site-title-color);
+    //color: var(--site-title-color);
+    color: #ffffff
   }
 
   .site-subtitle {
     font-size: 95%;
-    color: var(--site-subtitle-color);
+    font-weight: 800;
+    //color: var(--site-subtitle-color);
+    color: #f0f0f0
     margin-top: 0.25rem;
     word-spacing: 1px;
     -webkit-user-select: none;
