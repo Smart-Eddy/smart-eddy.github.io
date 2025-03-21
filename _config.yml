@@ -102,7 +102,7 @@ cdn:
 
 # the avatar on sidebar, support local or CORS resources
 # to-do : blog 메인 이미지 경로
-avatar:
+avatar: assets/img/eddy_logo.jpg
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
