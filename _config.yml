@@ -16,8 +16,8 @@ timezone: Asia/Seoul # timezone
 
 title: Eddy.log # title
 
-tagline: 안녕하세요🤚
-         공부한 내용을 기록합니다. # sub title
+tagline: 안녕하세요🤚<br>공부한 내용을 기록합니다. # sub title
+         
 
 description: >- # to-do : SEO keyword
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
