@@ -34,7 +34,7 @@ order: 4
 
 
 ## 💼 Experience
-### Backend Developer | [오션정보기술](http://www.ocean-it.co.kr/)
+### Backend Developer | [오션정보기술](https://www.ocean-it.co.kr/)
 *2023년 5월 - 현재*
 > to-do
 
