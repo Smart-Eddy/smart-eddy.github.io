@@ -13,24 +13,12 @@ order: 4
 {: .prompt-tip}
 
 ## 🚀 Tech Stack  
+|           | **Stack** |
+|:---------:|:---------:|
+| **Frontend** | ![HTML](https://img.shields.io/badge/HTML-%23E34F26.svg?style=flat&logo=html5&logoColor=white) ![CSS](https://img.shields.io/badge/CSS-%231572B6.svg?style=flat&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-%23F7DF1E.svg?style=flat&logo=javascript&logoColor=black) ![jQuery](https://img.shields.io/badge/jQuery-%230769AD.svg?style=flat&logo=jquery&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-%23563D7C?style=flat-square&logo=bootstrap&logoColor=white) |
+| **Backend**  | ![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white) ![JSP](https://img.shields.io/badge/JSP-%23FF5733?style=flat-square&logo=java&logoColor=white) ![Spring](https://img.shields.io/badge/Spring-%236DB33F.svg?style=flat&logo=spring&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-%236DB33F.svg?style=flat&logo=springboot&logoColor=white) ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-%230A7F35?style=flat-square&logo=thymeleaf&logoColor=white) |
+| **Database** | ![Oracle](https://img.shields.io/badge/Oracle-%23F00000.svg?style=flat&logo=oracle&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-%23336791.svg?style=flat&logo=postgresql&logoColor=white) |
 
-**Frontend**
-![HTML](https://img.shields.io/badge/HTML-%23E34F26.svg?style=flat&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS-%231572B6.svg?style=flat&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-%23F7DF1E.svg?style=flat&logo=javascript&logoColor=black)
-![jQuery](https://img.shields.io/badge/jQuery-%230769AD.svg?style=flat&logo=jquery&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-%23563D7C?style=flat-square&logo=bootstrap&logoColor=white)
-
-**Backend**
-![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white)
-![JSP](https://img.shields.io/badge/JSP-%23FF5733?style=flat-square&logo=java&logoColor=white)
-![Spring](https://img.shields.io/badge/Spring-%236DB33F.svg?style=flat&logo=spring&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-%236DB33F.svg?style=flat&logo=springboot&logoColor=white)
-![Thymeleaf](https://img.shields.io/badge/Thymeleaf-%230A7F35?style=flat-square&logo=thymeleaf&logoColor=white)
-
-**Database**
-![Oracle](https://img.shields.io/badge/Oracle-%23F00000.svg?style=flat&logo=oracle&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-%23336791.svg?style=flat&logo=postgresql&logoColor=white)
 
 
 
