@@ -1,11 +1,10 @@
 ---
 layout : post
-title : 댓글 기능 테스트용 글작성
-date : 2025-03-23 21:14:30 +0900
-categories : [Test]
-tags : [tagtest]
-description : 댓글 기능 적용이 제대로 되었는지 확인하는 테스트용 포스팅입니다.
+title : SQL 옵티마이저에 대한 이해
+date : 2025-05-04 22:55:30 +0900
+categories : [SQL Tuning]
+tags : [옵티마이저, Optimizer, Oracle]
+description : 옵티마이저는 DBMS에서 SQL의 최적의 실행 계획을 생성하는 중요한 기능입니다. 옵티마이저가 실행 계획을 결정하고 생성하는 과정에 대해서 정리한 글입니다.
 ---
 
-#COMMENTS TEST!
-안녕하세요 댓글 테스트 글입니다^^!
+## Optimzer란?
