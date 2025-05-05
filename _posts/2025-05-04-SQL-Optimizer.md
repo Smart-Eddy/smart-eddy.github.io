@@ -17,6 +17,7 @@ Oracle에서 옵티마이저는 사용자가 SQL 실행을 요청했을 때 처�
 ## 옵티마이저의 종류
 ---
 옵티마이저의 대표적인 종류는 크게 규칙기반(RBO)와 비용기반(CBO)로 나뉘게 됩니다.
+
 ### 규칙기반 옵티마이저 / RBO(Rule-Based Optimizer)
 - 규칙기반 옵티마이저(RBO)는 통계정보를 활용하지 않고 내부적으로 정해진 규칙에 따라 실행계획을 생성하는 옵티마이저입니다.
 - 인덱스 구조나 연산자, 조건절의 형태 등이 우선순위를 결정하는 요소(규칙)로 작용하게 됩니다.
@@ -26,8 +27,10 @@ Oracle에서 옵티마이저는 사용자가 SQL 실행을 요청했을 때 처�
 - 비용기반 옵티마이저(CBO)는 가장 최적의 비용을 계산하여 실행계획을 도출하는 옵티마이저입니다.
 - 최적의 비용은 `데이터 사전(Data Dictionary)`에서 `통계 정보(Statistics)`를 기반으로 계산합니다.
 - CBO의 내부 구성 흐름(SQL 최적화 과정)
+
 ![옵티마이저 최적화 구조도](assets/img/sql-tuning/optimizer-cbo.png){: .normal }
 _Oracle 공식 문서의 내용을 참고하여 재구성한 도식입니다. (https://docs.oracle.com/en/database/oracle/oracle-database/12.2/tgsql/)_
+
   1. Query Transformer(쿼리 변환기)
     - Paser에서 전달받은 SQL을 분석 후 쿼리 형식을 변환하는 것이 효율적인지를 검토하고 필요하다고 판단되면 쿼리의 형식을 변환합니다.
   2. Estimator(비용 평가)
