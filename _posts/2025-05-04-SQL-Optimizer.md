@@ -61,9 +61,11 @@ Oracle 공식문서를 보면 비용기반옵티마이저(CBO)의 비용평가�
 #### 통계정보의 종류
 1. 오브젝트 통계정보
    - 테이블
-      ```SQL
+  
+      ```sql
       SELECT * FROM DUAL;
       ```
+
       |통계항목|설명|
       |--|--|
       |NUM_ROWS|테이블에 저장된 총 레코드 수|
@@ -73,9 +75,11 @@ Oracle 공식문서를 보면 비용기반옵티마이저(CBO)의 비용평가�
       |LAST_ANALYZED|통계정보 수집일|
 
    - 인덱스
-      ```SQL
+  
+      ```sql
       SELECT * FROM DUAL;
       ```
+
       |통계항목|설명|
       |--|--|
       |BLEVEL|브랜치 레벨, 인덱스 루트에서 리프 블록 도달까지 읽게되는 블록의 수(깊이)로 값이 클 수록 I/O가 증가함|
@@ -87,9 +91,11 @@ Oracle 공식문서를 보면 비용기반옵티마이저(CBO)의 비용평가�
       |CLUSTERING_FACTOR|인덱스 키값을 기준으로 테이블의 데이터가 모여있는 정도|
 
    - 컬럼
-      ```SQL
+  
+      ```sql
       SELECT * FROM DUAL;
       ```
+
       |통계항목|설명|
       |--|--|
       |NUM_DISTINCT|중복을 제외한 컬럼 값 종류의 개수(NVD, Number of Distinct Values)|
@@ -99,9 +105,11 @@ Oracle 공식문서를 보면 비용기반옵티마이저(CBO)의 비용평가�
       |HIGH_VALUE|컬럼 값 중 가장 큰 값|
       |NUM_NULLS|컬럼 값 중 NULL값인 레코드의 수|
       - 히스토그램<br>
-        ```SQL
+  
+        ```sql
         SELECT * FROM DUAL;
         ```
+        
         |유형|설명|
         |--|--|
         |FREQUENCY(도수분포)||
