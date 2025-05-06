@@ -54,17 +54,49 @@ Data Dictionary에는 Object나 사용자 및 권한, 통계정보 등이 저장
 
 ### 통계정보(Statistics)
 Oracle 공식문서를 보면 비용기반옵티마이저(CBO)의 비용평가기(Estimator)가 통계정보를 참조해서 실행계획의 비용을 계산한다고 되어 있습니다. 즉, 옵티마이저는 통계정보를 기반으로 비용을 계산하기 때문에 실행계획에 있어서 통계정보는 매우 중요한 요소입니다.<br>
-통계정보는 `DBMS_STATS` 패키지를 통해 수집 및 갱신할 수 있습니다.<br>
-만약 통계정보를 갑자기 전부 삭제하거나 오랫동안 갱신하지 않던 통계정보를 재수집하거나 한다면 옵티마이저는 잘못된 판단으로 실행계획을 생성하게 될 수도 있습니다.<br>
-이는 SQL의 처리 성능이 갑자기 느려지거나 심한 경우 장애 상황이 발생할 수도 있음으로 통계정보를 효율적으로 관리하는 전략이 필요합니다.
+통계정보는 `DBMS_STATS` 패키지를 통해 수집, 갱신, 삭제할 수 있습니다.<br>
+
+```sql
+/** DBMS_STATS 패키지 주요 명령어 */
+
+-- 1. TABLE
+BEGIN
+DBMS_STATS.GATHER_TABLE_STATS(
+    OWNNAME          => 'SCOTT'  -- 소유자(스키마)명
+  , TABNAME          => 'EMP'  -- 테이블명
+  , ESTIMATE_PERCENT => DBMS_STATS.AUTO_SAMPLE_SIZE -- 샘플링 비율
+  , METHOD_OPT       => 'FOR ALL COLUMNS SIZE AUTO' -- 컬럼/히스토그램 수집 방식
+  , CASCADE          => TRUE -- 인덱스 통계도 함께 수집
+);
+END;
+
+-- 2. INDEX
+BEGIN
+DBMS_STATS.GATHER_INDEX_STATS(
+    OWNNAME => 'SCOTT'  -- 소유자(스키마)명
+  , INDNAME => 'EMP_IDX1'  -- 인덱스명
+);
+END;
+
+-- 3. SCHEMA
+BEGIN
+DBMS_STATS.GATHER_SCHEMA_STATS(
+    OWNNAME          => 'SCOTT'  -- 소유자(스키마)명
+  , ESTIMATE_PERCENT => DBMS_STATS.AUTO_SAMPLE_SIZE -- 샘플링 비율
+  , METHOD_OPT       => 'FOR ALL COLUMNS SIZE AUTO' -- 컬럼/히스토그램 수집 방식
+  , CASCADE          => TRUE -- 테이블 및 인덱스 통계도 함께 수집 
+);
+END;
+
+-- 참고 : METHOD_OPT 파라미터 option에 따라 히스토그램 수집 방식이 달라진다.
+```
+
+만약 수집된 통계정보를 갑자기 전부 삭제하거나 오랫동안 갱신하지 않던 통계정보를 재수집하거나 한다면 옵티마이저는 기존과는 다른 판단으로 실행계획을 생성하게 될 수도 있습니다.<br>
+이는 SQL의 처리 성능이 갑자기 느려지거나 최악의 경우 장애 상황이 발생할 수도 있음으로 통계정보를 효율적으로 관리하는 전략이 필요합니다.
 
 #### 통계정보의 종류
 1. 오브젝트 통계정보
    - 테이블
-  
-      ```sql
-      SELECT * FROM DUAL;
-      ```
 
       |통계항목|설명|
       |--|--|
@@ -75,10 +107,6 @@ Oracle 공식문서를 보면 비용기반옵티마이저(CBO)의 비용평가�
       |LAST_ANALYZED|통계정보 수집일|
 
    - 인덱스
-  
-      ```sql
-      SELECT * FROM DUAL;
-      ```
 
       |통계항목|설명|
       |--|--|
@@ -91,10 +119,6 @@ Oracle 공식문서를 보면 비용기반옵티마이저(CBO)의 비용평가�
       |CLUSTERING_FACTOR|인덱스 키값을 기준으로 테이블의 데이터가 모여있는 정도|
 
    - 컬럼
-  
-      ```sql
-      SELECT * FROM DUAL;
-      ```
 
       |통계항목|설명|
       |--|--|
@@ -104,27 +128,19 @@ Oracle 공식문서를 보면 비용기반옵티마이저(CBO)의 비용평가�
       |LOW_VALUE|컬럼 값 중 가장 작은 값|
       |HIGH_VALUE|컬럼 값 중 가장 큰 값|
       |NUM_NULLS|컬럼 값 중 NULL값인 레코드의 수|
+
       - 히스토그램<br>
-  
-        ```sql
-        SELECT * FROM DUAL;
-        ```
-        
+
         |유형|설명|
         |--|--|
         |FREQUENCY(도수분포)||
         |HEIGHT-BALANCED(높이균형)||
         |TOP-FREQUENCY(상위도수분포)||
         |HYBRID(하이브리드)||
+
 2. 시스템 통계정보
 
-### 선택도(Selectivity)와 카디널리티(Cardinality)
+### 선택도(Selectivity)
 
-### 비용(Cost)
-
-##
-
-##
-
-##
+### 카디널리티(Cardinality)
 
