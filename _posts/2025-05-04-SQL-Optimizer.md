@@ -27,7 +27,7 @@ Oracle에서 옵티마이저는 사용자가 SQL 실행을 요청했을 때 처�
 - 비용기반 옵티마이저(CBO)는 가장 최적의 비용을 계산하여 실행계획을 도출하는 옵티마이저입니다.
 - 최적의 비용은 `데이터 사전(Data Dictionary)`에서 `통계 정보(Statistics)`를 기반으로 계산합니다.
 - CBO의 내부 구성 흐름(SQL 최적화 과정)<br>
- -![옵티마이저 최적화 구조도](assets/img/sql-tuning/optimizer-cbo.png)
+  ![옵티마이저 최적화 구조도](assets/img/sql-tuning/optimizer-cbo.png)
 _Oracle 공식 문서의 내용을 참고하여 직접 재구성한 도식입니다. (https://docs.oracle.com/en/database/oracle/oracle-database/12.2/tgsql/)_
 
   1. Query Transformer(쿼리 변환기)
@@ -98,47 +98,46 @@ END;
 1. 오브젝트 통계정보
    - 테이블
 
-      |통계항목|설명|
-      |--|--|
-      |NUM_ROWS|테이블에 저장된 총 레코드 수|
-      |BLOCKS|사용된 익스텐트에 속한 총 블록 수(실제 테이블에 할당된 총 블록수는 `DBA_SEGMENTS`, `USER_SEGMENTS` 에서 확인 가능)|
-      |AVG_ROW_LEN|레코드당 평균 길이(Bytes)|
-      |SAMPLE_SIZE|샘플링한 레코드 수|
-      |LAST_ANALYZED|통계정보 수집일|
+      - NUM_ROWS : 테이블에 저장된 총 레코드 수
+      - BLOCKS : 테이블이 사용하는 블록 수(사용된 익스텐트 기준)
+      - AVG_ROW_LEN : 각 레코드 별 평균 길이(Bytes 단위)
+      - SAMPLE_SIZE : 샘플링한 레코드 수
 
    - 인덱스
 
-      |통계항목|설명|
-      |--|--|
-      |BLEVEL|브랜치 레벨, 인덱스 루트에서 리프 블록 도달까지 읽게되는 블록의 수(깊이)로 값이 클 수록 I/O가 증가함|
-      |LEAF_BLOCKS|인덱스 리프 블록의 총 수|
-      |NUM_ROWS|인덱스에 저장된 총 레코드 수|
-      |DISTINCT_KEYS|인덱스(KEY)값의 조합으로 만들어지는 값의 종류 개수, 인덱스 키값을 모두 `=` 조건으로 조회할 때 `선택도`를 계산하는데 사용됨|
-      |AVG_LEAF_BLOCKS_PER_KEY|인덱스의 키값을 모두 `=` 조건으로 조회할 때 읽게 되는 리프 블록의 수|
-      |AVG_LEAF_DATA_PER_KEY|인덱스의 키값을 모두 `=` 조건으로 조회 할 때 읽게 되는 테이블 블록의 수|
-      |CLUSTERING_FACTOR|인덱스 키값을 기준으로 테이블의 데이터가 모여있는 정도|
+      - BLEVEL : 브랜치 레벨, 인덱스 루트에서 리프 블록 도달까지 읽게되는 블록의 수(브랜치의 깊이)
+      - LEAF_BLOCKS : 인덱스 리프 블록의 수
+      - NUM_ROWS : 인덱스에 저장된 레코드 수
+      - DISTINCT_KEYS : 인덱스(KEY)값의 조합으로 만들어지는 값의 종류 개수로 `=` 조건으로 조회할 때 `선택도(Selectivity)`를 계산할 때 사용된다.
+      - AVG_LEAF_BLOCKS_PER_KEY : 평균 리프 블록의 수
+      - AVG_LEAF_DATA_PER_KEY : 평균 테이블 블록의 수
+      - CLUSTERING_FACTOR : 인덱스 키값을 기준으로 테이블의 데이터가 모여있는 정도()
 
    - 컬럼
 
-      |통계항목|설명|
-      |--|--|
-      |NUM_DISTINCT|중복을 제외한 컬럼 값 종류의 개수(NVD, Number of Distinct Values)|
-      |DENSITY|컬럼 값의 분포 정도로 `선택도`를 계산할 때 사용됨<br> 히스토그램이 없거나 균등하게 분포된 경우 1/NUM_DISTINCT(NVD) 값과 같음|
-      |AVG_COL_LEN|컬럼 평균 길이(Bytes)|
-      |LOW_VALUE|컬럼 값 중 가장 작은 값|
-      |HIGH_VALUE|컬럼 값 중 가장 큰 값|
-      |NUM_NULLS|컬럼 값 중 NULL값인 레코드의 수|
+      - NUM_DISTINCT : 중복을 제외한 컬럼 값 종류의 개수(NVD, Number of Distinct Values)
+      - DENSITY : 컬럼 값의 분포 정도(컬럼 `=` 조건 검색 시 `선택도(Selectivity)`를 미리 구해놓은 값, 히스토그램이 없는 경우 1/NUM_DISTINCT(NVD) 값과 같음)
+      - AVG_COL_LEN : 컬럼 평균 길이(Bytes 단위)
+      - LOW_VALUE/HIGH_VALUE : 컬럼 값의 최소/최대 값
+      - NUM_NULLS : 컬럼 값이 NULL인 레코드의 수
 
-      - 히스토그램<br>
+      >
+      **컬럼 히스토그램이란?**  
+      컬럼의 `=` 조건에 대한 `선택도(Selectivity)`는 컬럼 통계 중 미리 구해놓은 `DENSITY`를 이용하거나 `1/NUM_DISTINCT` 공식으로 구할 수 있습니다.<br>
+      컬럼의 데이터 분포가 균일한 경우 위의 공식으로 잘 맞지만, 데이터 분포가 규일하지 않은 경우에는 위의 공식이 잘 맞지 않습니다.<br>
+      `선택도(Selectivity)`를 제대로 구하지 못할 경우 비용 계산이 제대로 되지 않을 수 있고 이는 최적의 실행계획을 만들지 못하게 됩니다.<br>
+      오라클에서는 데이터 분포가 균일하지 않은 컬럼의 선택도 계산을 위해 `히스토그램`이라는 통계를 추가적으로 활용합니다.<br>
+      히스토그램은 실제 컬럼 값별로 데이터를 읽고 데이터의 비중 및 빈도를 미리 계산해놓은 통계정보입니다.
+      히스토그램의 유형으로 `FREQUENCY(도수분포)`, `HEIGHT-BALANCED(높이균형)`, `TOP-FREQUENCY(상위도수분포)`, `HYBRID(하이브리드)`가 있습니다.
+      히스토그램을 사용하지 않는 경우 `NONE`으로 해당 컬럼의 데이터 분포도가 균일하다고 볼 수 있습니다.
+      *히스토그램 통계정보 수집은 `DBMS_STATS`패키지로 통계정보를 수집할 때 METHOD_OPT 파라미터로 지정할 수 있습니다.*
+      {: .prompt-tip}
 
-        |유형|설명|
-        |--|--|
-        |FREQUENCY(도수분포)||
-        |HEIGHT-BALANCED(높이균형)||
-        |TOP-FREQUENCY(상위도수분포)||
-        |HYBRID(하이브리드)||
+   - *위의 통계정보는 주요 통계정보를 정리한 것으로 실제로는는 더 많은 통계정보가 존재합니다.*
 
 2. 시스템 통계정보
+   - 시스템 통계정보는 애플리케이션 및 하드웨어의 퍼포먼스에 관한 통계정보입니다.
+   - 
 
 ### 선택도(Selectivity)
 
