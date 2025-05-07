@@ -96,15 +96,15 @@ END;
 
 #### 통계정보의 종류
 1. 오브젝트 통계정보
-   - 테이블
-
+   - 테이블  
+   - 
       - NUM_ROWS : 테이블에 저장된 총 레코드 수
       - BLOCKS : 테이블이 사용하는 블록 수(사용된 익스텐트 기준)
       - AVG_ROW_LEN : 각 레코드 별 평균 길이(Bytes 단위)
       - SAMPLE_SIZE : 샘플링한 레코드 수
 
    - 인덱스
-
+   - 
       - BLEVEL : 브랜치 레벨, 인덱스 루트에서 리프 블록 도달까지 읽게되는 블록의 수(브랜치의 깊이)
       - LEAF_BLOCKS : 인덱스 리프 블록의 수
       - NUM_ROWS : 인덱스에 저장된 레코드 수
@@ -114,7 +114,7 @@ END;
       - CLUSTERING_FACTOR : 인덱스 키값을 기준으로 테이블의 데이터가 모여있는 정도()
 
    - 컬럼
-
+   - 
       - NUM_DISTINCT : 중복을 제외한 컬럼 값 종류의 개수(NVD, Number of Distinct Values)
       - DENSITY : 컬럼 값의 분포 정도(컬럼 `=` 조건 검색 시 `선택도(Selectivity)`를 미리 구해놓은 값, 히스토그램이 없는 경우 1/NUM_DISTINCT(NVD) 값과 같음)
       - AVG_COL_LEN : 컬럼 평균 길이(Bytes 단위)
