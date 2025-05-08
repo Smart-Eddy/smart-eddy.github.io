@@ -104,21 +104,80 @@ END;
 #### 통계정보의 종류
 1. 오브젝트 통계정보
    - 테이블  
+
+      ```sql
+
+      /** 테이블 통계 정보 조회 */
+      SELECT NUM_ROWS
+           , BLOCKS
+           , AVG_ROW_LEN
+           , SAMPLE_SIZE
+        FROM ALL_TABLES -- , ALL_TAB_STATISTICS 
+      WHERE OWNER = 'SCOTT' -- 소유자(스키마)명
+        AND TABLE_NAME = 'EMP'; -- 테이블명
+
+      ```
+
       - NUM_ROWS : 테이블에 저장된 총 레코드 수
       - BLOCKS : 테이블이 사용하는 블록 수(사용된 익스텐트 기준)
       - AVG_ROW_LEN : 각 레코드 별 평균 길이(Bytes 단위)
       - SAMPLE_SIZE : 샘플링한 레코드 수
 
    - 인덱스
+
+      ```sql
+
+      /** 인덱스 통계 정보 조회 */
+      SELECT BLEVEL
+           , LEAF_BLOCKS
+           , NUM_ROWS
+           , DISTINCT_KEYS
+           , AVG_LEAF_BLOCKS_PER_KEY
+           , AVG_DATA_BLOCKS_PER_KEY
+           , CLUSTERING_FACTOR
+           , LAST_ANALYZED -- 통계정보 수집일
+        FROM ALL_INDEXES -- , ALL_IND_STATISTICS
+      WHERE OWNER = 'SCOTT' -- 소유자(스키마)명
+        AND TABLE_NAME = 'EMP' -- 테이블명
+        AND INDEX_NAME = 'PK_EMP'; -- 인덱스명
+
+      ```
+
       - BLEVEL : 브랜치 레벨, 인덱스 루트에서 리프 블록 도달까지 읽게되는 블록의 수(브랜치의 깊이)
       - LEAF_BLOCKS : 인덱스 리프 블록의 수
       - NUM_ROWS : 인덱스에 저장된 레코드 수
       - DISTINCT_KEYS : 인덱스(KEY)값의 조합으로 만들어지는 값의 종류 개수로 `=` 조건으로 조회할 때 `선택도(Selectivity)`를 계산할 때 사용된다.
       - AVG_LEAF_BLOCKS_PER_KEY : 평균 리프 블록의 수
-      - AVG_LEAF_DATA_PER_KEY : 평균 테이블 블록의 수
+      - AVG_DATA_BLOCKS_PER_KEY : 평균 테이블 블록의 수
       - CLUSTERING_FACTOR : 인덱스 키값을 기준으로 데이터가 모여있는 정도(테이블의 데이터가 얼마나 연속적으로 저장되어 있는지를 나타냄)
 
    - 컬럼
+
+      ```sql
+
+      /** 컬럼 통계 정보 조회 */
+      SELECT NUM_DISTINCT
+           , DENSITY
+           , AVG_COL_LEN
+           , LOW_VALUE
+           , HIGH_VALUE
+           , NUM_NULLS
+           , HISTOGRAM -- 히스토그램 정보
+           , LAST_ANALYZED -- 통계정보 수집일
+        FROM ALL_TAB_COLUMNS -- ,ALL_TAB_COL_STATISTICS
+      WHERE OWNER = 'SCOTT' -- 소유자(스키마)명
+        AND TABLE_NAME = 'EMP' -- 테이블명
+        AND COLUMN_NAME = 'DEPTNO'; -- 컬럼명
+
+      /** 컬럼 히스토그램 상세 정보 조회 */
+      SELECT *
+        FROM ALL_HISTOGRAMS
+       WHERE OWNER = 'SCOTT'
+         AND TABLE_NAME = 'EMP'
+         AND COLUMN_NAME = 'DEPTNO';
+     
+      ```
+
       - NUM_DISTINCT : 중복을 제외한 컬럼 값 종류의 개수(NVD, Number of Distinct Values)
       - DENSITY : 컬럼 값의 분포 정도(컬럼 `=` 조건 검색 시 `선택도(Selectivity)`를 미리 구해놓은 값, 히스토그램이 없는 경우 1/NUM_DISTINCT(NVD) 값과 같음)
       - AVG_COL_LEN : 컬럼 평균 길이(Bytes 단위)
@@ -149,10 +208,12 @@ END;
   - 선택도는 SQL의 조건절에 의해 선택되는 레코드의 비율입니다.
   - `=` 조건으로 검색할 때의 선택도는 `NVD(Number of Distinct Values)`를 활용해서 구할 수 있습니다.
   - 선택도는 실행 계획에는 표시되지 않지만 DBMS가 내부적으로 계산합니다.
+  
   $$ 선택도 = 1 / NVD $$
 
 2. 카디널리티(Cardinality)
   - 카디널리티는 실행 계획의 각 작업(Predicate)에서 반환되는 레코드의 수, 즉 SQL 조건절에 의해 선택되는 레코드의 개수입니다.
+
   $$ 카디널리티 = 총 레코드 수 * 선택도 = 총 레코드 수/ NDV$$
 
 옵티마이저는 이렇게 `선택도`를 활용해서 `카디널리티`를 구한 뒤 비용을 계산하고 `테이블 엑세스, 필터, 조인 방식 등`을 결정하게 됩니다.<br>
