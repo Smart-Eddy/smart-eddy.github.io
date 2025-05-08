@@ -179,8 +179,8 @@ END;
      
       ```
 
-      - NUM_DISTINCT : 중복을 제외한 컬럼 값 종류의 개수(NVD, Number of Distinct Values)
-      - DENSITY : 컬럼 값의 분포 정도(컬럼 `=` 조건 검색 시 `선택도(Selectivity)`를 미리 구해놓은 값, 히스토그램이 없는 경우 1/NUM_DISTINCT(NVD) 값과 같음)
+      - NUM_DISTINCT : 중복을 제외한 컬럼 값 종류의 개수(NDV, Number of Distinct Values)
+      - DENSITY : 컬럼 값의 분포 정도(컬럼 `=` 조건 검색 시 `선택도(Selectivity)`를 미리 구해놓은 값, 히스토그램이 없는 경우 1/NUM_DISTINCT(NDV) 값과 같음)
       - AVG_COL_LEN : 컬럼 평균 길이(Bytes 단위)
       - LOW_VALUE/HIGH_VALUE : 컬럼 값의 최소/최대 값
       - NUM_NULLS : 컬럼 값이 NULL인 레코드의 수
@@ -207,10 +207,10 @@ END;
 
 1. 선택도(Selectivity)  
   - 선택도는 SQL의 조건절에 의해 선택되는 레코드의 비율입니다.
-  - `=` 조건으로 검색할 때의 선택도는 `NVD(Number of Distinct Values)`를 활용해서 구할 수 있습니다.
+  - `=` 조건으로 검색할 때의 선택도는 `NDV(Number of Distinct Values)`를 활용해서 구할 수 있습니다.
   - 선택도는 실행 계획에는 표시되지 않지만 DBMS가 내부적으로 계산합니다.
   
-  $$ 선택도 = 1 / NVD $$
+  $$ 선택도 = 1 / NDV $$
 
 2. 카디널리티(Cardinality)
   - 카디널리티는 실행 계획의 각 작업(Predicate)에서 반환되는 레코드의 수, 즉 SQL 조건절에 의해 선택되는 레코드의 개수입니다.
@@ -219,7 +219,7 @@ END;
 
 옵티마이저는 이렇게 `선택도`를 활용해서 `카디널리티`를 구한 뒤 비용을 계산하고 `테이블 엑세스, 필터, 조인 방식 등`을 결정하게 됩니다.<br>
 선택도가 정확하지 않으면 카디널리티도 계산을 잘 못하게되고 비효율적인 실행계획을 선택하게 될 수 있습니다.<br>
-또한 선택도 계산에는 NVD가 관계가 있기 때문에 통계정보를 수집할 때 수집주기나 샘플링 비율 등을 잘 결정해서 올바른 통계정보를 수집할 수 있도록 노력해야 합니다.<br>
+또한 선택도 계산에는 NDV 관계가 있기 때문에 통계정보를 수집할 때 수집주기나 샘플링 비율 등을 잘 결정해서 올바른 통계정보를 수집할 수 있도록 노력해야 합니다.<br>
 
 ### 마치며...
 ---
@@ -231,6 +231,6 @@ END;
 
 #### 참고자료
 - 친절한 SQL튜닝 (저자: 조시형)
-- Oracle 공식문서 : https://docs.oracle.com/en/database/oracle/oracle-database/12.2/tgsql/
+- Oracle 공식문서 : <https://docs.oracle.com/en/database/oracle/oracle-database/12.2/tgsql/>
 
 > 이 포스팅은 제가 공부하면서 정리한 내용을 바탕으로 작성했습니다. <br>내용 중 틀린 부분이나 정정할 내용이 있다면 댓글로 알려주시면 감사하겠습니다. 😊
