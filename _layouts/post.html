@@ -160,7 +160,7 @@ script_includes:
       "
     >
       <div class="license-wrapper">
-        {% if site.data.locales[lang].copyright.license.template %}
+<!--        {% if site.data.locales[lang].copyright.license.template %}
           {% capture _replacement %}
         <a href="{{ site.data.locales[lang].copyright.license.link }}">
           {{ site.data.locales[lang].copyright.license.name }}
@@ -168,7 +168,8 @@ script_includes:
         {% endcapture %}
 
           {{ site.data.locales[lang].copyright.license.template | replace: ':LICENSE_NAME', _replacement }}
-        {% endif %}
+        {% endif %} -->
+        여러 자료를 기반으로 공부하고 정리한 내용입니다. 공유 시 출처를 꼭 남겨주세요!😊
       </div>
 
       {% include post-sharing.html lang=lang %}
